@@ -3,7 +3,8 @@
 
 from common import (NAME, PHONE, PHONE_TEL, AREA, BASE, SERVICES, BY_SLUG, WA_QUOTE,
                     head, ld_breadcrumb, ld_faq, hero_small, photo_strip, cta_strip,
-                    footer, sidebar, faq_block, write, strip)
+                    footer, sidebar, faq_block, write, strip,
+                    new_page, pick, img_tag)
 
 BUILT = []
 D = 1  # every article lives in /blog/
@@ -12,8 +13,7 @@ POSTS = [
 dict(slug="how-much-does-house-cleaning-cost-in-etobicoke",
      title="How Much Does House Cleaning Cost in Etobicoke?",
      date="2026-09-08", pretty="8 September 2026", read="6 min",
-     img="images/kitchen-deep-clean.jpg",
-     alt="Stovetop being degreased during a deep clean",
+     img="kitchen-deep-clean",
      teaser="Why nobody honest quotes a flat number over the phone, and the six things that actually move the price.",
      service="deep-cleaning-etobicoke",
      body=[
@@ -39,8 +39,7 @@ dict(slug="how-much-does-house-cleaning-cost-in-etobicoke",
 dict(slug="deep-clean-vs-regular-clean",
      title="Deep Clean or Regular Clean: Which One Do You Actually Need?",
      date="2026-09-15", pretty="15 September 2026", read="5 min",
-     img="images/residential-cleaning.jpg",
-     alt="Cleaner vacuuming a bright living room",
+     img="residential-cleaning",
      teaser="One resets the home, the other holds it there. Booking the wrong one is how people end up disappointed.",
      service="deep-cleaning-etobicoke",
      body=[
@@ -65,8 +64,7 @@ dict(slug="deep-clean-vs-regular-clean",
 dict(slug="move-out-cleaning-checklist-etobicoke",
      title="The Move Out Cleaning Checklist Landlords Actually Inspect",
      date="2026-09-22", pretty="22 September 2026", read="6 min",
-     img="images/move-out-cleaning.jpg",
-     alt="Baseboards cleaned in an empty unit before handover",
+     img="move-out-cleaning",
      teaser="The rooms and details a walkthrough stops at, in the order an inspection usually works through them.",
      service="move-out-cleaning-etobicoke",
      body=[
@@ -97,8 +95,7 @@ dict(slug="move-out-cleaning-checklist-etobicoke",
 dict(slug="how-often-should-you-clean-your-house",
      title="How Often Should You Actually Clean Your House?",
      date="2026-09-29", pretty="29 September 2026", read="5 min",
-     img="images/floor-mopping.jpg",
-     alt="Hard floor being mopped through a hallway",
+     img="floor-mopping",
      teaser="A realistic schedule by room and by task, for people who do not want to think about it again.",
      service="recurring-cleaning-etobicoke",
      body=[
@@ -132,8 +129,7 @@ dict(slug="how-often-should-you-clean-your-house",
 dict(slug="condo-cleaning-guide-toronto",
      title="Cleaning a Condo Properly: What Houses Do Not Prepare You For",
      date="2026-10-06", pretty="6 October 2026", read="5 min",
-     img="images/living-room.jpg",
-     alt="Modern condo living room cleaned and reset",
+     img="living-room",
      teaser="Shared air, balcony glass, elevator bookings and the five square feet that make a suite feel dirty.",
      service="condo-cleaning-etobicoke",
      body=[
@@ -157,8 +153,7 @@ dict(slug="condo-cleaning-guide-toronto",
 dict(slug="how-to-prepare-for-a-cleaning-visit",
      title="How to Prepare for a Cleaning Visit (and Get More for Your Money)",
      date="2026-10-13", pretty="13 October 2026", read="4 min",
-     img="images/dining-detail.jpg",
-     alt="Dining table being detailed to a streak free finish",
+     img="dining-detail",
      teaser="Fifteen minutes of preparation turns a cleaning visit into more cleaning and less tidying.",
      service="house-cleaning-etobicoke",
      body=[
@@ -182,8 +177,7 @@ dict(slug="how-to-prepare-for-a-cleaning-visit",
 dict(slug="carpet-cleaning-what-to-expect",
      title="Carpet Cleaning: What Comes Out, What Does Not, and How Long It Takes to Dry",
      date="2026-10-20", pretty="20 October 2026", read="5 min",
-     img="images/carpet-cleaning.jpg",
-     alt="Carpet being cleaned with a hot water extractor",
+     img="carpet-cleaning",
      teaser="Honest expectations for hot water extraction, including the stains nobody can promise to remove.",
      service="carpet-cleaning-etobicoke",
      body=[
@@ -211,8 +205,7 @@ dict(slug="carpet-cleaning-what-to-expect",
 dict(slug="kitchen-grease-and-limescale-guide",
      title="Grease and Limescale: Why Your Kitchen and Bathroom Resist Cleaning",
      date="2026-10-27", pretty="27 October 2026", read="5 min",
-     img="images/kitchen-detail.jpg",
-     alt="Kitchen stovetop detail after a clean",
+     img="kitchen-detail",
      teaser="Two different problems that need two different approaches, and why scrubbing harder makes one of them worse.",
      service="kitchen-bathroom-cleaning",
      body=[
@@ -237,8 +230,7 @@ dict(slug="kitchen-grease-and-limescale-guide",
 dict(slug="cleaning-with-pets-in-the-house",
      title="Cleaning a Home With Pets: Hair, Odour and the Things That Actually Work",
      date="2026-11-03", pretty="3 November 2026", read="5 min",
-     img="images/evening-vacuum.jpg",
-     alt="Living room being vacuumed in the evening",
+     img="evening-vacuum",
      teaser="Why pet hair defeats ordinary vacuuming, and where the smell is really coming from.",
      service="carpet-cleaning-etobicoke",
      body=[
@@ -264,8 +256,7 @@ dict(slug="cleaning-with-pets-in-the-house",
 dict(slug="post-renovation-dust-guide",
      title="Why Renovation Dust Comes Back Twice (and How to Beat It)",
      date="2026-11-10", pretty="10 November 2026", read="4 min",
-     img="images/wood-floor.jpg",
-     alt="Wood floor cleaned after construction work",
+     img="wood-floor",
      teaser="Fine particles stay airborne for days. Here is how to clean around that instead of fighting it.",
      service="post-renovation-cleaning",
      body=[
@@ -291,8 +282,7 @@ dict(slug="post-renovation-dust-guide",
 dict(slug="cleaning-products-you-should-never-mix",
      title="Cleaning Products You Should Never Mix, and Simpler Alternatives",
      date="2026-11-17", pretty="17 November 2026", read="4 min",
-     img="images/bathroom-detail.jpg",
-     alt="Bathroom faucet and sink being detailed",
+     img="bathroom-detail",
      teaser="A short safety list worth knowing, plus why most homes need three products rather than fifteen.",
      service="kitchen-bathroom-cleaning",
      body=[
@@ -321,8 +311,7 @@ dict(slug="cleaning-products-you-should-never-mix",
 dict(slug="spring-cleaning-checklist-etobicoke",
      title="A Spring Cleaning Checklist That Is Not Just the Usual List",
      date="2026-11-24", pretty="24 November 2026", read="5 min",
-     img="images/bedroom-result.jpg",
-     alt="Freshly made bedroom after a seasonal clean",
+     img="bedroom-result",
      teaser="The jobs worth doing once a year, in the order that stops you doing any of them twice.",
      service="deep-cleaning-etobicoke",
      body=[
@@ -352,6 +341,7 @@ dict(slug="spring-cleaning-checklist-etobicoke",
 
 
 def article(p):
+    new_page()
     svc = BY_SLUG[p["service"]]
     trail = [("Blog", "blog/index.html"), (p["title"], "blog/%s.html" % p["slug"])]
     sections = []
@@ -383,20 +373,20 @@ def article(p):
 
     others = [q for q in POSTS if q["slug"] != p["slug"]][:3]
     more = "".join(
-        '<article class="service-tile"><div class="service-tile-media">'
-        '<img src="../%s" alt="%s" loading="lazy"></div>'
+        '<article class="service-tile"><div class="service-tile-media">%s</div>'
         '<div class="service-tile-body"><h3>%s</h3><p>%s</p>'
         '<div class="row"><a href="%s.html">Read &rarr;</a></div></div></article>'
-        % (q["img"], q["alt"], q["title"], q["teaser"], q["slug"]) for q in others)
+        % (img_tag(pick(q["img"]), D), q["title"], q["teaser"], q["slug"])
+        for q in others)
 
     html = head(
         title=strip(p["title"]) + " | " + NAME,
         desc=strip(p["teaser"]),
         canonical="%s/blog/%s.html" % (BASE, p["slug"]),
-        depth=D, og_type="article", og_image=p["img"],
+        depth=D, og_type="article", og_image="images/%s.jpg" % p["img"],
         extra_ld=ld_article + ld_breadcrumb(trail),
     ) + hero_small(
-        D, trail, p["title"], "", p["teaser"], media=p["img"], alt=p["alt"],
+        D, trail, p["title"], "", p["teaser"], media=p["img"],
     ) + """
   <section class="section">
     <div class="container">
@@ -406,7 +396,7 @@ def article(p):
 {BODY}
 
           <figure class="media-figure">
-            <img src="../{SIMG}" alt="{SALT}" loading="lazy">
+            {SFIG}
             <figcaption>Need this handled instead of read about? {SSHORT} across {AREA}.</figcaption>
           </figure>
 
@@ -426,11 +416,11 @@ def article(p):
   </section>
 
 {CTA}{FOOT}""".format(PRETTY=p["pretty"], READ=p["read"], BODY="\n".join(sections),
-                      SIMG=svc["img"], SALT=svc["alt"], SSHORT=strip(svc["short"]),
+                      SFIG=img_tag(pick(svc["thumb"], svc["img"]), D),
+                      SSHORT=strip(svc["short"]),
                       SSLUG=svc["slug"], AREA=AREA, WA=WA_QUOTE, TEL=PHONE_TEL,
                       PHONE=PHONE, MORE=more,
-                      SIDEBAR=sidebar(D, photo=svc["thumb"], photo_alt=svc["thumb_alt"],
-                                      photo_cap=strip(svc["short"])),
+                      SIDEBAR=sidebar(D, photo_cap=strip(svc["short"])),
                       CTA=cta_strip(D), FOOT=footer(D))
     BUILT.append(write("blog/%s.html" % p["slug"], html))
 
@@ -442,12 +432,14 @@ for post in POSTS:
 # ----------------------------------------------------------------------
 # Blog index
 # ----------------------------------------------------------------------
+new_page()
+
 cards = "".join(
-    '<article class="service-tile"><div class="service-tile-media">'
-    '<img src="../%s" alt="%s" loading="lazy"></div>'
+    '<article class="service-tile"><div class="service-tile-media">%s</div>'
     '<div class="service-tile-body"><h3>%s</h3><p>%s</p>'
     '<div class="row"><a href="%s.html">Read &rarr;</a><span style="font-size:.78rem;color:var(--c-ink-soft)">%s</span></div>'
-    '</div></article>' % (p["img"], p["alt"], p["title"], p["teaser"], p["slug"], p["read"])
+    '</div></article>' % (img_tag(pick(p["img"]), D), p["title"], p["teaser"],
+                          p["slug"], p["read"])
     for p in reversed(POSTS))
 
 index = head(
@@ -460,8 +452,7 @@ index = head(
     D, [("Blog", "blog/index.html")],
     "Notes From", "THE JOB",
     "What we have learned keeping homes in shape across the west end. No filler, no listicles, just the things clients ask us on site.",
-    media="images/property-exterior.jpg",
-    alt="Well kept Etobicoke home exterior",
+    media="property-exterior",
 ) + """
   <section class="section">
     <div class="container">
@@ -485,12 +476,8 @@ index = head(
   </section>
 
 {CTA}{FOOT}""".format(CARDS=cards,
-                      STRIP=photo_strip(D, [
-                          ("images/kitchen-detail.jpg", "Kitchen surfaces cleaned", "Kitchens"),
-                          ("images/bathroom-result.jpg", "Shower glass cleared", "Bathrooms"),
-                          ("images/window-cleaning.jpg", "Interior window cleaned", "Glass"),
-                          ("images/carpet-cleaning.jpg", "Carpet extraction detail", "Carpets"),
-                      ]),
+                      STRIP=photo_strip(D, ["kitchen-detail", "bathroom-result",
+                                            "window-cleaning", "carpet-cleaning"]),
                       CTA=cta_strip(D), FOOT=footer(D))
 
 BUILT.append(write("blog/index.html", index))

@@ -4,7 +4,7 @@
 from common import (NAME, PHONE, PHONE_TEL, AREA, BASE, MAPS, SVG, SERVICES, BY_SLUG,
                     LOCATIONS, wa, head, ld_service, ld_faq, ld_breadcrumb, hero_small,
                     photo_strip, service_tiles, cta_strip, footer, sidebar, faq_block,
-                    write, strip)
+                    write, strip, new_page, pick, img_tag)
 
 BUILT = []
 
@@ -41,10 +41,10 @@ COPY = {
       ("Will it be the same cleaners each time?", "Wherever scheduling allows, yes. Familiarity is most of what makes a recurring clean good: they know your floors, your products and which cupboard the bin bags live in."),
       ("What if I need to skip a week?", "Just tell us. There is no penalty for skipping, though if the gap gets long the next visit may take extra time."),
       ("Do you clean inside the oven every visit?", "Not as standard, because it adds real time. Add it when you want it, or set it on a rotation, for instance every third visit.")],
-    strip=[("images/kitchen-detail.jpg", "Kitchen counters cleaned", "Kitchens"),
-           ("images/bathroom-detail.jpg", "Bathroom taps and sink detailed", "Bathrooms"),
-           ("images/wood-floor.jpg", "Floor care in a living room", "Floors"),
-           ("images/childrens-room.jpg", "Bedroom dusted and tidied", "Bedrooms")],
+    strip=["kitchen-detail",
+           "bathroom-detail",
+           "wood-floor",
+           "childrens-room"],
     related=["deep-cleaning-etobicoke", "recurring-cleaning-etobicoke", "kitchen-bathroom-cleaning"]),
 
 "deep-cleaning-etobicoke": dict(
@@ -77,10 +77,10 @@ COPY = {
       ("How long does it take?", "Most homes take a crew most of a working day. Larger or heavily soiled homes can take two visits, which we will tell you before booking, not halfway through."),
       ("Can you get grout back to white?", "Usually much closer than it is now. Grout that has been stained for years may not come all the way back, and we would rather say that up front than overpromise."),
       ("Do I need a deep clean before starting a recurring schedule?", "Not always, but if the home has been neglected it is cheaper overall. One deep clean, then maintenance, beats paying rescue prices every visit.")],
-    strip=[("images/kitchen-deep-clean.jpg", "Stovetop degreased", "Kitchen"),
-           ("images/bathroom-result.jpg", "Shower glass and tile", "Tile and grout"),
-           ("images/wood-floor.jpg", "Deep floor care", "Floors"),
-           ("images/dining-detail.jpg", "Dining surfaces detailed", "Detail work")],
+    strip=["kitchen-deep-clean",
+           "bathroom-result",
+           "wood-floor",
+           "dining-detail"],
     related=["house-cleaning-etobicoke", "kitchen-bathroom-cleaning", "carpet-cleaning-etobicoke"]),
 
 "move-out-cleaning-etobicoke": dict(
@@ -114,10 +114,10 @@ COPY = {
       ("Can you clean before the furniture is out?", "We can, but you will get a worse result for the same money. Wherever possible, book us once the home is empty."),
       ("Do you do the carpets too?", "Yes, as an add on with hot water extraction. On a move out it is usually worth doing, because carpets are the first thing an inspection looks at."),
       ("What about a move in clean?", "Same job, opposite direction. Nobody wants to unpack into someone else's dust, and an empty home is the only chance to clean it properly.")],
-    strip=[("images/move-out-cleaning.jpg", "Baseboards cleaned in an empty unit", "Empty units"),
-           ("images/kitchen-detail.jpg", "Kitchen cleaned inside and out", "Kitchens"),
-           ("images/bathroom-result.jpg", "Bathroom to inspection standard", "Bathrooms"),
-           ("images/wood-floor.jpg", "Floors cleaned wall to wall", "Floors")],
+    strip=["move-out-cleaning",
+           "kitchen-detail",
+           "bathroom-result",
+           "wood-floor"],
     related=["deep-cleaning-etobicoke", "carpet-cleaning-etobicoke", "window-cleaning-etobicoke"]),
 
 "condo-cleaning-etobicoke": dict(
@@ -150,10 +150,10 @@ COPY = {
       ("Can you come while I am at work?", "Yes. Most of our condo work happens in an empty suite. We lock up and message you when it is done."),
       ("Do you clean the balcony?", "The inside face of the glass and the door track come as standard. Sweeping and washing the balcony floor is an add on, and we do not work on exterior heights."),
       ("How long does a one bedroom take?", "Usually a couple of hours for a maintained suite, longer for a first visit or a deep clean. You get the figure before we book.")],
-    strip=[("images/living-room.jpg", "Condo living room reset", "Living areas"),
-           ("images/bedroom-result.jpg", "Bedroom made up after a clean", "Bedrooms"),
-           ("images/window-cleaning.jpg", "Balcony glass cleaned from inside", "Glass"),
-           ("images/floor-mopping.jpg", "Hard floors mopped through the suite", "Floors")],
+    strip=["living-room",
+           "bedroom-result",
+           "window-cleaning",
+           "floor-mopping"],
     related=["house-cleaning-etobicoke", "move-out-cleaning-etobicoke", "window-cleaning-etobicoke"]),
 
 "kitchen-bathroom-cleaning": dict(
@@ -186,10 +186,10 @@ COPY = {
       ("Will the shower glass come clear?", "In most cases yes. Glass that has been left for years can hold a haze that needs a second visit, and we will say so rather than promise it in one."),
       ("Do you clean inside the oven?", "As an add on, and it is the single most common one. It takes real time, which is why it is priced separately rather than hidden in the rate."),
       ("Is this enough before a house viewing?", "For most viewings, these two rooms plus the floors is what makes the difference. If you have time for more, a deep clean is the better option.")],
-    strip=[("images/kitchen-deep-clean.jpg", "Stovetop degreased", "Cooking area"),
-           ("images/bathroom-detail.jpg", "Faucet and sink detailed", "Fittings"),
-           ("images/bathroom-result.jpg", "Clean bathroom with clear glass", "Wet areas"),
-           ("images/kitchen-detail.jpg", "Kitchen surfaces after a clean", "Surfaces")],
+    strip=["kitchen-deep-clean",
+           "bathroom-detail",
+           "bathroom-result",
+           "kitchen-detail"],
     related=["deep-cleaning-etobicoke", "house-cleaning-etobicoke", "move-out-cleaning-etobicoke"]),
 
 "office-cleaning-etobicoke": dict(
@@ -222,10 +222,10 @@ COPY = {
       ("Do you supply paper and soap?", "We can, or we can restock what you buy. Either way, tell us at the quote stage so it is priced properly."),
       ("How often do small offices book?", "Most land on twice a week, with washrooms and bins daily if the headcount justifies it. A quiet studio might only need weekly."),
       ("Are you insured for commercial premises?", "Ask us when you request a quote and we will confirm current coverage in writing before any work starts.")],
-    strip=[("images/office-cleaning.jpg", "Office desk disinfected", "Workstations"),
-           ("images/entry-mopping.jpg", "Entryway floor mopped", "Entrances"),
-           ("images/floor-mopping.jpg", "Hard floors mopped after hours", "Floors"),
-           ("images/window-cleaning.jpg", "Interior glass cleaned", "Glass")],
+    strip=["office-cleaning",
+           "entry-mopping",
+           "floor-mopping",
+           "window-cleaning"],
     related=["carpet-cleaning-etobicoke", "window-cleaning-etobicoke", "post-renovation-cleaning"]),
 
 "carpet-cleaning-etobicoke": dict(
@@ -258,10 +258,10 @@ COPY = {
       ("Will every stain come out?", "No, and anyone promising that is guessing. Dye stains, bleach marks and old pet damage in the backing often lighten rather than vanish. We tell you which is which before we start."),
       ("Do you clean sofas and chairs?", "Yes, with upholstery tools and a gentler solution. Some fabrics are water sensitive, so we check the care label first."),
       ("Is it safe with pets and children?", "Yes, once dry. Keep them off the area while it dries, mainly so nothing gets tracked back through it.")],
-    strip=[("images/carpet-cleaning.jpg", "Carpet cleaned with hot water extraction", "Extraction"),
-           ("images/evening-vacuum.jpg", "Living room carpet vacuumed", "Traffic lanes"),
-           ("images/living-room.jpg", "Living room after a carpet clean", "Living rooms"),
-           ("images/bedroom-result.jpg", "Bedroom carpet refreshed", "Bedrooms")],
+    strip=["carpet-cleaning",
+           "evening-vacuum",
+           "living-room",
+           "bedroom-result"],
     related=["deep-cleaning-etobicoke", "move-out-cleaning-etobicoke", "house-cleaning-etobicoke"]),
 
 "window-cleaning-etobicoke": dict(
@@ -294,10 +294,10 @@ COPY = {
       ("Will the glass be streak free?", "That is the standard, and we check each pane in the light before moving on. If a pane dries badly, tell us and we will redo it."),
       ("Can you do high rise condo windows?", "The interior face, yes, including balcony glass from inside the suite. The exterior face on a tower is a specialist rope access job."),
       ("Do you clean the tracks?", "Yes, and it is usually the part that makes the biggest difference. Tracks get vacuumed first, then wiped.")],
-    strip=[("images/window-cleaning.jpg", "Interior window cleaned streak free", "Glass"),
-           ("images/dining-detail.jpg", "Surfaces detailed near the window", "Frames and sills"),
-           ("images/living-room.jpg", "Living room with clean glass", "Living rooms"),
-           ("images/bathroom-result.jpg", "Shower glass cleared", "Shower glass")],
+    strip=["window-cleaning",
+           "dining-detail",
+           "living-room",
+           "bathroom-result"],
     related=["deep-cleaning-etobicoke", "condo-cleaning-etobicoke", "house-cleaning-etobicoke"]),
 
 "post-renovation-cleaning": dict(
@@ -330,10 +330,10 @@ COPY = {
       ("Why does dust come back?", "Because fine particles stay suspended for days and settle slowly. A follow up pass a week later is common on bigger jobs, and worth budgeting for."),
       ("Do you remove construction debris?", "We clean rather than haul. Small amounts of packaging and offcuts go with us; a skip load needs a disposal firm."),
       ("Can you clean new floors safely?", "Yes, once they are cured. Tell us the finish and the manufacturer's guidance and we will work to it.")],
-    strip=[("images/kitchen-detail.jpg", "Fine dust wiped from a new kitchen", "New kitchens"),
-           ("images/wood-floor.jpg", "New floor cleaned after the trades", "Floors"),
-           ("images/window-cleaning.jpg", "New glass cleaned of residue", "New glass"),
-           ("images/entry-mopping.jpg", "Entry washed down after a build", "Entries")],
+    strip=["kitchen-detail",
+           "wood-floor",
+           "window-cleaning",
+           "entry-mopping"],
     related=["deep-cleaning-etobicoke", "carpet-cleaning-etobicoke", "window-cleaning-etobicoke"]),
 
 "recurring-cleaning-etobicoke": dict(
@@ -366,15 +366,16 @@ COPY = {
       ("Can I change the day?", "Yes, with notice, and permanently if a new slot suits you better. We would rather move it than have you cancel."),
       ("Is it cheaper than booking one offs?", "Per visit, yes, clearly. The home takes less time to clean when it has not been left for three months."),
       ("What happens on holidays?", "Tell us the dates and we skip or move them. Many clients book an extra deep clean before guests arrive instead.")],
-    strip=[("images/floor-mopping.jpg", "Hard floors mopped on a recurring visit", "Every visit"),
-           ("images/childrens-room.jpg", "Child's room dusted and tidied", "Bedrooms"),
-           ("images/evening-vacuum.jpg", "Evening vacuuming in a living room", "Evening slots"),
-           ("images/dining-detail.jpg", "Dining table detailed", "Living areas")],
+    strip=["floor-mopping",
+           "childrens-room",
+           "evening-vacuum",
+           "dining-detail"],
     related=["house-cleaning-etobicoke", "deep-cleaning-etobicoke", "kitchen-bathroom-cleaning"]),
 }
 
 
 def build_service(svc):
+    new_page()
     c = COPY[svc["slug"]]
     short_plain = strip(svc["short"]).lower()
     trail = [("Services", "services.html"), (strip(svc["short"]), svc["slug"] + ".html")]
@@ -387,7 +388,7 @@ def build_service(svc):
         <div class="content-main">
 {INTRO}
           <figure class="media-figure">
-            <img src="{IMG}" alt="{ALT}" loading="lazy">
+            {FIG}
             <figcaption>{CAPTION}</figcaption>
           </figure>
 
@@ -419,7 +420,7 @@ def build_service(svc):
 
 {CTA}{FOOT}""".format(
         INTRO="\n".join("          <p>%s</p>" % p for p in c["intro"]),
-        IMG=svc["img"], ALT=svc["alt"],
+        FIG=img_tag(pick(svc["thumb"]), 0),
         CAPTION="%s across %s. Quote first, work second." % (strip(svc["short"]), strip(AREA)),
         INCTITLE=c["includes_title"],
         INCLUDES="".join("<li>%s</li>" % x for x in c["includes"]),
@@ -430,18 +431,17 @@ def build_service(svc):
         SHORT=short_plain,
         FAQ=faq_block(c["faq"]),
         RELATED=service_tiles(0, related),
-        SIDEBAR=sidebar(0, photo=svc["thumb"], photo_alt=svc["thumb_alt"],
-                        photo_cap=strip(svc["short"]) + " detail"),
+        SIDEBAR=sidebar(0, photo_cap=strip(svc["short"]) + " detail"),
         CTA=cta_strip(0), FOOT=footer(0))
 
     html = head(
         title=strip(svc["title"]) + " | " + NAME,
         desc=strip(c["sub"])[:300],
         canonical="%s/%s.html" % (BASE, svc["slug"]),
-        og_image=svc["img"],
+        og_image="images/%s.jpg" % svc["img"],
         extra_ld=ld_service(svc) + ld_breadcrumb(trail) + ld_faq(c["faq"]),
     ) + hero_small(
-        0, trail, c["h1"], c["glow"], c["sub"], media=svc["img"], alt=svc["alt"],
+        0, trail, c["h1"], c["glow"], c["sub"], media=svc["img"],
     ) + body
     BUILT.append(write(svc["slug"] + ".html", html))
 
@@ -454,6 +454,7 @@ for s in SERVICES:
 # Service area pages
 # ----------------------------------------------------------------------
 def build_location(loc):
+    new_page()
     area = loc["area"]
     trail = [(area, loc["slug"] + ".html")]
     faq = [
@@ -466,9 +467,9 @@ def build_location(loc):
         ("Can you work when nobody is home?",
          "Yes. Keys, lockboxes and concierge handover are all normal. We lock up and send photos when the job is done."),
     ]
-    tiles = service_tiles(0, [BY_SLUG[s] for s in (
+    tiles_src = [BY_SLUG[s] for s in (
         "house-cleaning-etobicoke", "deep-cleaning-etobicoke", "move-out-cleaning-etobicoke",
-        "condo-cleaning-etobicoke", "kitchen-bathroom-cleaning", "carpet-cleaning-etobicoke")])
+        "condo-cleaning-etobicoke", "kitchen-bathroom-cleaning", "carpet-cleaning-etobicoke")]
     others = "".join(
         '<li><a href="%s.html">%s</a></li>' % (l["slug"], l["area"])
         for l in LOCATIONS if l["slug"] != loc["slug"])
@@ -478,12 +479,14 @@ def build_location(loc):
         desc=("House cleaning, deep cleans, move in and move out, condos, carpets and interior windows in "
               "%s. Free photo quotes from Fanta Cleaning, open seven days." % area),
         canonical="%s/%s.html" % (BASE, loc["slug"]),
-        og_image=loc["img"],
+        og_image="images/%s.jpg" % loc["img"],
         extra_ld=ld_breadcrumb(trail) + ld_faq(faq),
-    ) + hero_small(
+    )
+    tiles = service_tiles(0, tiles_src)
+    html += hero_small(
         0, trail, "House Cleaning in", area.upper(),
         "The full list, delivered in %s: regular and deep cleaning, move in and move out, condos and apartments, kitchens and bathrooms, offices, carpets and interior windows. %s" % (area, loc["note"]),
-        media=loc["img"], alt=loc["alt"],
+        media=loc["img"],
     ) + """
   <section class="section">
     <div class="container">
@@ -494,7 +497,7 @@ def build_location(loc):
           <p>Homes in {AREA} run the full range, from older detached houses to newer condo stock, and each asks for something different. Older houses tend to need the deep clean, the grout and the carpets. Newer units tend to need turnovers, glass and post-renovation dust. We quote from photos either way, so the price fits the home rather than an average.</p>
 
           <figure class="media-figure">
-            <img src="{IMG}" alt="{ALT}" loading="lazy">
+            {FIG}
             <figcaption>Serving {AREA} and the surrounding neighbourhoods, seven days a week.</figcaption>
           </figure>
 
@@ -518,11 +521,10 @@ def build_location(loc):
     </div>
   </section>
 
-{CTA}{FOOT}""".format(AREA=area, NOTE=loc["note"], IMG=loc["img"], ALT=loc["alt"],
+{CTA}{FOOT}""".format(AREA=area, NOTE=loc["note"],
+                      FIG=img_tag(pick("living-room", "bedroom-result"), 0),
                       TILES=tiles, FAQ=faq_block(faq), OTHERS=others,
-                      SIDEBAR=sidebar(0, photo="images/living-room.jpg",
-                                      photo_alt="Living room cleaned and reset",
-                                      photo_cap="Booked across " + area),
+                      SIDEBAR=sidebar(0, photo_cap="Booked across " + area),
                       CTA=cta_strip(0), FOOT=footer(0))
     BUILT.append(write(loc["slug"] + ".html", html))
 

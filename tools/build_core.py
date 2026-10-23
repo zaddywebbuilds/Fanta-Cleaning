@@ -6,7 +6,8 @@ from common import (NAME, TAGLINE, PHONE, PHONE_TEL, AREA, BASE, MAPS, SVG, SERV
                     RING, LOCATIONS, WA_QUOTE, WA_GENERAL, wa, head, ld_business, ld_faq,
                     ld_breadcrumb, topbar, crumbs, btns, hero_small, photo_strip,
                     service_tiles, wa_mock, cta_strip, footer, sidebar, faq_block,
-                    write, strip, HOURS_SHORT, ADDRESS_LINE)
+                    write, strip, HOURS_SHORT, ADDRESS_LINE,
+                    new_page, pick, img_tag, BY_KEY)
 
 BUILT = []
 
@@ -33,13 +34,14 @@ HOME_FAQ = [
      "For recurring cleans we keep the same people on your home wherever we can. They learn the quirks of the place, and you stop having to explain them."),
 ]
 
+new_page()
+
 ring_cards = []
-for i, s in enumerate(RING, start=1):
+for i, svc in enumerate(RING, start=1):
     ring_cards.append(
-        '<div class="svc-item p%d"><a class="svc-card" href="%s.html">'
-        '<img src="%s" alt="%s" loading="lazy">'
+        '<div class="svc-item p%d"><a class="svc-card" href="%s.html">%s'
         '<span class="svc-card-label">%s</span></a></div>'
-        % (i, s["slug"], s["img"], s["alt"], s["short"]))
+        % (i, svc["slug"], img_tag(pick(svc["img"]), 0), svc["short"]))
 
 home = head(
     title="House Cleaning in Etobicoke &amp; Toronto | " + NAME,
@@ -115,7 +117,7 @@ home = head(
       <div class="why-grid">
         <div class="why-card">
           <div class="why-media">
-            <img src="images/residential-cleaning.jpg" alt="Cleaner vacuuming a bright living room" loading="lazy">
+            {WHY1}
           </div>
           <div class="why-body">
             <span class="icon sun">{SPRAY}</span>
@@ -126,7 +128,7 @@ home = head(
 
         <div class="why-card">
           <div class="why-media">
-            <img src="images/move-out-cleaning.jpg" alt="Baseboards cleaned in an empty unit before handover" loading="lazy">
+            {WHY2}
           </div>
           <div class="why-body">
             <span class="icon steel">{KEY}</span>
@@ -137,7 +139,7 @@ home = head(
 
         <div class="why-card">
           <div class="why-media">
-            <img src="images/kitchen-deep-clean.jpg" alt="Stovetop being degreased during a deep clean" loading="lazy">
+            {WHY3}
           </div>
           <div class="why-body">
             <span class="icon gold">{CHECK}</span>
@@ -172,14 +174,14 @@ home = head(
       <div class="grid grid-2">
         <a class="bx-tile" href="{WA}" target="_blank" rel="noopener">
           <div class="bx-media">
-            <img class="bg" src="images/property-exterior.jpg" alt="Well kept Etobicoke home with a tidy exterior" loading="lazy">
+            {BX1}
           </div>
           <h3>GET A QUOTE <span class="arrow">&#8599;</span></h3>
           <p>Send photos of the home on WhatsApp and get a price back today.</p>
         </a>
         <a class="bx-tile" href="services.html">
           <div class="bx-media">
-            <img class="bg" src="images/living-room.jpg" alt="Modern living room left clean and reset" loading="lazy">
+            {BX2}
           </div>
           <h3>SERVICES <span class="arrow">&#8599;</span></h3>
           <p>Regular cleans, deep cleans, move in and out, condos, kitchens, bathrooms, offices, carpets and windows.</p>
@@ -198,10 +200,10 @@ home = head(
         <h2>What we do across {AREA}</h2>
         <p>Pick the one you need, or ask for a few at once. Most homes book a deep clean first and then settle into a regular visit.</p>
       </div>
-      <div class="grid grid-3">
+      <div class="svc-links">
 {TILES}
       </div>
-      <div style="text-align:center; margin-top:2rem;"><a class="btn btn-glass" href="services.html">See all services</a></div>
+      <div style="text-align:center; margin-top:1.4rem;"><a class="btn btn-glass" href="services.html">See all services</a></div>
     </div>
   </section>
 
@@ -268,20 +270,8 @@ home = head(
         <span class="eyebrow">FAQ</span>
         <h2>Frequently asked questions</h2>
       </div>
-      <div class="faq-layout">
-        <div class="faq-deco">
-          <div class="deco-media"><img src="images/bathroom-detail.jpg" alt="Bathroom faucet and sink being detailed" loading="lazy"></div>
-          <div class="deco-media"><img src="images/bathroom-result.jpg" alt="Clean bathroom with polished glass and tile" loading="lazy"></div>
-          <div class="deco-tag"><span class="dot"></span>Glass, tile and grout</div>
-        </div>
-
+      <div class="faq-wide">
         {FAQ}
-
-        <div class="faq-deco">
-          <div class="deco-media"><img src="images/window-cleaning.jpg" alt="Interior window being cleaned streak free" loading="lazy"></div>
-          <div class="deco-media"><img src="images/dining-detail.jpg" alt="Dining table detailed to a streak free finish" loading="lazy"></div>
-          <div class="deco-tag"><span class="dot"></span>Windows, frames and tracks</div>
-        </div>
       </div>
     </div>
   </section>
@@ -291,17 +281,16 @@ home = head(
     WAICON=SVG["wa"], TEL=PHONE_TEL, PHONE=PHONE, HOURS=HOURS_SHORT, SPRAY=SVG["spray"],
     KEY=SVG["key"], LEAF=SVG["leaf"],
     CHECK=SVG["check"], CHAT=SVG["chat"], WAMOCK=wa_mock(0), AREA=AREA,
-    TILES=service_tiles(0, [s for s in SERVICES if s["slug"] != "recurring-cleaning-etobicoke"]),
-    STRIP=photo_strip(0, [
-        ("images/kitchen-detail.jpg", "Kitchen stovetop and surround detail", "Kitchen surfaces"),
-        ("images/bathroom-result.jpg", "Shower screen and tile left clear", "Showers and tile"),
-        ("images/wood-floor.jpg", "Polished wood floor in a living room", "Floors and carpet"),
-        ("images/childrens-room.jpg", "Child's bedroom dusted and tidied", "Bedrooms"),
-        ("images/window-cleaning.jpg", "Interior window cleaned streak free", "Glass and sills"),
-        ("images/office-cleaning.jpg", "Office desk disinfected after hours", "Office spaces"),
-        ("images/entry-mopping.jpg", "Entryway floor being mopped", "Entryways"),
-        ("images/carpet-cleaning.jpg", "Carpet cleaned with hot water extraction", "Carpet and rugs"),
-    ]),
+    TILES="".join(
+        '<a class="svc-link" href="%s.html"><strong>%s</strong><span>%s</span></a>'
+        % (x["slug"], x["short"], x["blurb"]) for x in SERVICES),
+    WHY1=img_tag(pick("residential-cleaning"), 0),
+    WHY2=img_tag(pick("move-out-cleaning"), 0),
+    WHY3=img_tag(pick("kitchen-deep-clean"), 0),
+    BX1=img_tag(pick("property-exterior"), 0, cls="bg"),
+    BX2=img_tag(pick("living-room"), 0, cls="bg"),
+    STRIP=photo_strip(0, ["wood-floor", "childrens-room", "entry-mopping",
+                          "evening-vacuum", "bedroom-result"]),
     FAQ=faq_block(HOME_FAQ), CTA=cta_strip(0), FOOT=footer(0))
 
 page("index.html", home)
@@ -310,6 +299,8 @@ page("index.html", home)
 # ======================================================================
 # SERVICES
 # ======================================================================
+new_page()
+
 services_page = head(
     title="Cleaning Services in Etobicoke &amp; Toronto | " + NAME,
     desc=("Every service from Fanta Cleaning: house cleaning, deep cleaning, move in and move out, condos "
@@ -321,8 +312,7 @@ services_page = head(
     0, [("Services", "services.html")],
     "Everything We", "CLEAN",
     "Ten services, one crew, one invoice. Most homes book two or three at a time: a deep clean with the windows, a move out with the carpets, a regular visit with the oven every few months.",
-    media="images/living-room.jpg",
-    alt="Modern living room cleaned and reset",
+    media="living-room",
 ) + """
   <section class="section">
     <div class="container">
@@ -358,19 +348,19 @@ services_page = head(
       </div>
       <div class="grid grid-3">
         <div class="glass-card">
-          <img src="images/move-out-cleaning.jpg" alt="Baseboards cleaned during a move out" loading="lazy">
+          {BUN1}
           <h3>The handover</h3>
           <p>Move out clean, interior windows and a carpet pass. Everything a walkthrough or a listing photo picks up on.</p>
           <p><a href="move-out-cleaning-etobicoke.html">Move out cleaning &rarr;</a></p>
         </div>
         <div class="glass-card">
-          <img src="images/kitchen-deep-clean.jpg" alt="Stovetop degreased during a deep clean" loading="lazy">
+          {BUN2}
           <h3>The reset</h3>
           <p>Deep clean through the whole home, kitchens and bathrooms taken back to the tile. Usually booked in spring or before guests arrive.</p>
           <p><a href="deep-cleaning-etobicoke.html">Deep cleaning &rarr;</a></p>
         </div>
         <div class="glass-card">
-          <img src="images/kitchen-detail.jpg" alt="Fine dust wiped from a kitchen surface after a renovation" loading="lazy">
+          {BUN3}
           <h3>After the trades</h3>
           <p>Post-renovation cleanup with a window and floor pass, so the finished work is actually visible.</p>
           <p><a href="post-renovation-cleaning.html">Post-renovation &rarr;</a></p>
@@ -388,12 +378,10 @@ services_page = head(
     OUTSIDE=service_tiles(0, [s for s in SERVICES if s["slug"] in (
         "office-cleaning-etobicoke", "carpet-cleaning-etobicoke",
         "window-cleaning-etobicoke", "post-renovation-cleaning")]),
-    STRIP=photo_strip(0, [
-        ("images/bedroom-result.jpg", "Freshly made bed in a clean bedroom", "Bedrooms"),
-        ("images/floor-mopping.jpg", "Hard floor mopped through a hallway", "Hard floors"),
-        ("images/carpet-cleaning.jpg", "Carpet cleaned with hot water extraction", "Carpets"),
-        ("images/office-cleaning.jpg", "Office desk cleaned after hours", "Offices"),
-    ]),
+    BUN1=img_tag(pick("childrens-room"), 0),
+    BUN2=img_tag(pick("evening-vacuum"), 0),
+    BUN3=img_tag(pick("property-exterior"), 0),
+    STRIP=photo_strip(0, ["bedroom-result", "wood-floor", "dining-detail", "entry-mopping"]),
     CTA=cta_strip(0), FOOT=footer(0))
 
 page("services.html", services_page)
@@ -417,6 +405,8 @@ PRICING_FAQ = [
      "Payment is arranged directly with us when the work is booked. Ask when you get your quote and we'll confirm what is accepted."),
 ]
 
+new_page()
+
 pricing = head(
     title="Pricing &amp; Free Quotes | " + NAME + " Etobicoke",
     desc=("How Fanta Cleaning prices house cleaning in Etobicoke and Toronto. Free photo quotes, price "
@@ -427,8 +417,7 @@ pricing = head(
     0, [("Pricing", "pricing.html")],
     "Know the Price", "BEFORE WE START",
     "Send photos, get a figure, decide. Nothing begins until you have agreed a number, and that number does not move unless the job does.",
-    media="images/kitchen-deep-clean.jpg",
-    alt="Stovetop degreased during a deep clean",
+    media="kitchen-deep-clean",
 ) + """
   <section class="section">
     <div class="container">
@@ -439,17 +428,17 @@ pricing = head(
 
           <div class="grid grid-3" style="margin:1.5rem 0;">
             <div class="glass-card">
-              <img src="images/dining-detail.jpg" alt="Dining table being detailed" loading="lazy">
+              {STEP1}
               <h3>1. Show us</h3>
               <p>Photos on WhatsApp, or a quick description on the phone. Rooms, rough size, and anything unusual.</p>
             </div>
             <div class="glass-card">
-              <img src="images/kitchen-detail.jpg" alt="Kitchen surface detail after a clean" loading="lazy">
+              {STEP2}
               <h3>2. Get a number</h3>
               <p>A price for the work as described, with what is included spelled out. Same day, usually within the hour.</p>
             </div>
             <div class="glass-card">
-              <img src="images/entry-mopping.jpg" alt="Entryway floor mopped at the start of a visit" loading="lazy">
+              {STEP3}
               <h3>3. Pick a window</h3>
               <p>Choose a day and a start time. We work seven days a week, early starts included.</p>
             </div>
@@ -470,7 +459,7 @@ pricing = head(
           <p>A home cleaned every two weeks never gets far from clean, so each visit takes less time. Weekly, biweekly and monthly schedules are priced per visit and come in under a comparable one off clean. Landlords and small offices with several properties are quoted as a block.</p>
 
           <figure class="media-figure">
-            <img src="images/office-cleaning.jpg" alt="Office desk being disinfected after hours" loading="lazy">
+            {PFIG}
             <figcaption>Office work is usually quoted per visit on a fixed schedule, after hours or before opening.</figcaption>
           </figure>
 
@@ -484,8 +473,11 @@ pricing = head(
   </section>
 
 {CTA}{FOOT}""".format(FAQ=faq_block(PRICING_FAQ),
-                      SIDEBAR=sidebar(0, photo="images/bedroom-result.jpg",
-                                      photo_alt="Freshly made bed in a clean bedroom",
+                      STEP1=img_tag(pick("dining-detail"), 0),
+                      STEP2=img_tag(pick("kitchen-detail"), 0),
+                      STEP3=img_tag(pick("entry-mopping"), 0),
+                      PFIG=img_tag(pick("office-cleaning"), 0),
+                      SIDEBAR=sidebar(0, photo="bedroom-result",
                                       photo_cap="Quoted, cleaned, done"),
                       CTA=cta_strip(0), FOOT=footer(0))
 
@@ -495,6 +487,8 @@ page("pricing.html", pricing)
 # ======================================================================
 # ABOUT
 # ======================================================================
+new_page()
+
 about = head(
     title="About " + NAME + " | Etobicoke House Cleaning",
     desc=("Who we are: a house cleaning crew based at " + ADDRESS_LINE + ", cleaning homes, condos and "
@@ -505,8 +499,7 @@ about = head(
     0, [("About", "about.html")],
     "A Local Crew for", "YOUR HOME",
     "Fanta Cleaning is based in Etobicoke and cleans homes, condos, rentals and small offices across the west end of the city. Clean spaces, happy faces, same crew every time.",
-    media="images/property-exterior.jpg",
-    alt="Well kept Etobicoke home with a tidy exterior",
+    media="property-exterior",
 ) + """
   <section class="section">
     <div class="container">
@@ -517,7 +510,7 @@ about = head(
           <p>Fanta works the other way around. On a recurring plan you get the same people, and after two or three visits nobody needs telling anything. That is the entire reason recurring cleans come out better than one offs, and why they take less time.</p>
 
           <figure class="media-figure">
-            <img src="images/residential-cleaning.jpg" alt="Cleaner working through a bright living room" loading="lazy">
+            {AFIG}
             <figcaption>Regular visits mean the same crew, who learn the home instead of starting from scratch each time.</figcaption>
           </figure>
 
@@ -545,14 +538,9 @@ about = head(
   </section>
 
 {CTA}{FOOT}""".format(
-    STRIP=photo_strip(0, [
-        ("images/property-exterior.jpg", "Detached home exterior in Etobicoke", "Etobicoke"),
-        ("images/living-room.jpg", "Condo living room cleaned in Toronto", "Toronto"),
-        ("images/bedroom-result.jpg", "Bedroom cleaned and made up", "Mississauga"),
-        ("images/wood-floor.jpg", "Wood floor polished in a North York home", "North York"),
-    ]),
-    SIDEBAR=sidebar(0, photo="images/childrens-room.jpg",
-                    photo_alt="Child's bedroom dusted and tidied",
+    AFIG=img_tag(pick("residential-cleaning"), 0),
+    STRIP=photo_strip(0, ["living-room", "bedroom-result", "wood-floor", "entry-mopping"]),
+    SIDEBAR=sidebar(0, photo="childrens-room",
                     photo_cap="The rooms that matter most"),
     CTA=cta_strip(0), FOOT=footer(0))
 
@@ -562,6 +550,8 @@ page("about.html", about)
 # ======================================================================
 # CONTACT
 # ======================================================================
+new_page()
+
 contact = head(
     title="Contact &amp; Free Quote | " + NAME + " Etobicoke",
     desc=("Get a free quote from Fanta Cleaning. WhatsApp " + PHONE + " with photos, or call. Based at " +
@@ -572,8 +562,7 @@ contact = head(
     0, [("Contact", "contact.html")],
     "Tell Us What", "NEEDS DOING",
     "Photos are the fastest route to a real price. Send them on WhatsApp and you will usually have a number back within the hour.",
-    media="images/entry-mopping.jpg",
-    alt="Entryway floor being mopped at the start of a visit",
+    media="entry-mopping",
 ) + """
   <section class="section">
     <div class="container">
@@ -582,19 +571,19 @@ contact = head(
           <h2>Three ways to reach us</h2>
           <div class="grid grid-3" style="margin:1.5rem 0;">
             <a class="glass-card" href="{WA}" target="_blank" rel="noopener" style="text-decoration:none;">
-              <img src="images/dining-detail.jpg" alt="Dining table being detailed" loading="lazy">
+              {WAY1}
               <h3>WhatsApp</h3>
               <p>Best for quotes. Send photos of the home and anything specific you want handled.</p>
               <p><strong>{PHONE}</strong></p>
             </a>
             <a class="glass-card" href="tel:{TEL}" style="text-decoration:none;">
-              <img src="images/floor-mopping.jpg" alt="Hard floor being mopped" loading="lazy">
+              {WAY2}
               <h3>Phone</h3>
               <p>Best for scheduling and short notice jobs. Call early for same day availability.</p>
               <p><strong>{PHONE}</strong></p>
             </a>
             <a class="glass-card" href="{MAPS}" target="_blank" rel="noopener" style="text-decoration:none;">
-              <img src="images/property-exterior.jpg" alt="Etobicoke home exterior" loading="lazy">
+              {WAY3}
               <h3>Google Profile</h3>
               <p>Find us on Google, check the hours and leave a review after your visit.</p>
               <p><strong>{NAMEP}</strong></p>
@@ -613,7 +602,7 @@ contact = head(
           </ul>
 
           <figure class="media-figure">
-            <img src="images/move-out-cleaning.jpg" alt="Baseboards cleaned in an empty unit before handover" loading="lazy">
+            {CFIG}
             <figcaption>If there is a deadline, say so in the first message. Handovers and listing shoots get scheduled around.</figcaption>
           </figure>
 
@@ -636,8 +625,11 @@ contact = head(
 {CTA}{FOOT}""".format(WA=WA_QUOTE, WAICON=SVG["wa"], PHONE=PHONE, TEL=PHONE_TEL, MAPS=MAPS,
                       CLOCK=SVG["clock"], PIN=SVG["pin"], HOME=SVG["home"], AREA=AREA,
                       ADDRESS=ADDRESS_LINE, NAMEP=strip(NAME),
-                      SIDEBAR=sidebar(0, photo="images/kitchen-detail.jpg",
-                                      photo_alt="Kitchen surface detail after a clean",
+                      WAY1=img_tag(pick("dining-detail"), 0),
+                      WAY2=img_tag(pick("floor-mopping"), 0),
+                      WAY3=img_tag(pick("property-exterior"), 0),
+                      CFIG=img_tag(pick("move-out-cleaning"), 0),
+                      SIDEBAR=sidebar(0, photo="kitchen-detail",
                                       photo_cap="Send a photo, get a price"),
                       CTA=cta_strip(0), FOOT=footer(0))
 
@@ -647,6 +639,8 @@ page("contact.html", contact)
 # ======================================================================
 # REVIEWS
 # ======================================================================
+new_page()
+
 reviews = head(
     title="Reviews | " + NAME + " Etobicoke",
     desc=("Fanta Cleaning on Google: rated 5.0. Read the profile, leave a review after your visit, and "
@@ -657,8 +651,7 @@ reviews = head(
     0, [("Reviews", "reviews.html")],
     "Judge Us on", "THE LAST JOB",
     "Our Google profile is young, so there is nothing here worth dressing up. What we can tell you is exactly what every visit is held to, and where to say so if we miss it.",
-    media="images/bathroom-result.jpg",
-    alt="Clean bathroom with polished glass and tile",
+    media="bathroom-result",
 ) + """
   <section class="section">
     <div class="container">
@@ -713,14 +706,8 @@ reviews = head(
 {CTA}{FOOT}""".format(
     MAPS=MAPS, WAFB=wa("I'd like to leave feedback about a job you did for me:"),
     CHECKTXT="&#10003;", STAR=SVG["star"], RATING="5.0", COUNT="1",
-    STRIP=photo_strip(0, [
-        ("images/bathroom-detail.jpg", "Bathroom faucet detailed", "Bathrooms"),
-        ("images/kitchen-detail.jpg", "Kitchen stovetop detail", "Kitchens"),
-        ("images/wood-floor.jpg", "Polished wood floor", "Floors"),
-        ("images/move-out-cleaning.jpg", "Unit cleaned between tenants", "Turnovers"),
-    ]),
-    SIDEBAR=sidebar(0, photo="images/office-cleaning.jpg",
-                    photo_alt="Office desk cleaned after hours",
+    STRIP=photo_strip(0, ["bathroom-detail", "kitchen-detail", "wood-floor", "move-out-cleaning"]),
+    SIDEBAR=sidebar(0, photo="office-cleaning",
                     photo_cap="Office accounts"),
     CTA=cta_strip(0), FOOT=footer(0))
 
@@ -731,6 +718,7 @@ page("reviews.html", reviews)
 # LEGAL
 # ======================================================================
 def legal(slug, title, heading, body):
+    new_page()
     return head(
         title=title + " | " + NAME,
         desc=title + " for " + strip(NAME) + ", a house cleaning business operating in Etobicoke, Ontario.",
@@ -739,7 +727,7 @@ def legal(slug, title, heading, body):
     ) + hero_small(
         0, [(heading, slug)], heading.split(" ")[0], " ".join(heading.split(" ")[1:]).upper() or "PAGE",
         "The plain version. If anything here is unclear, ask us and we will explain it in a sentence.",
-        media="images/wood-floor.jpg", alt="Polished wood floor in a cleaned home",
+        media="wood-floor",
     ) + """
   <section class="section">
     <div class="container">

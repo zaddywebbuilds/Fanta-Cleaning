@@ -51,8 +51,31 @@ paths will not resolve.
 GitHub Pages serves `master` from the repository root. `.nojekyll` is committed so
 Pages publishes the files as they are.
 
-## A note on the photography
+## The photographs
 
-The 18 images in `images/` are AI-generated illustrations, not photographs of
-Fanta Cleaning staff, equipment or completed jobs. They are used as generic
-interior imagery. Do not caption them as documented work or real employees.
+There are 18 of them and that is the entire supply, so two rules are enforced
+in code rather than by hand.
+
+**No page shows the same picture twice.** `tools/common.py` holds the
+catalogue and an allocator. Each page calls `new_page()`, then every slot calls
+`pick("preferred-key")`. If that picture is already on the page, the slot gets
+the next free one instead. Alt text and captions travel with the photograph, so
+the words always describe what is actually on screen. Ask a page for a 19th
+picture and the build fails rather than quietly repeating one — that is the
+check, so keep any new section inside the budget.
+
+**Nothing is drawn larger than it really is.** The files are 406x406 and
+374x246; there is no larger master. Enlarging them is what made them look soft,
+so `--photo-max` in `css/theme.css` caps every box that holds a photograph at
+368px, the width at which the smallest still renders 1:1 in a 3:2 frame. Every
+`<img>` also carries its true `width` and `height`. If you ever get bigger
+source files, raise `--photo-max` and the whole site uses the extra detail.
+
+Because of this the homepage lists its services as links rather than a second
+photo grid: the rotating ring above it already spends eight pictures on those
+same services, and 18 will not cover both. `services.html` carries the full
+photo grid.
+
+The images are AI-generated illustrations, not photographs of Fanta Cleaning
+staff, equipment or completed jobs. They are used as generic interior imagery.
+Do not caption them as documented work or real employees.

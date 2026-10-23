@@ -45,68 +45,133 @@ WA_GENERAL = wa("I'd like a quote for house cleaning. Here's what I need:")
 WA_QUOTE = wa("I'd like a free quote. Here's the home and what needs doing:")
 
 # ----------------------------------------------------------------------
+# The photographs. Eighteen files, and that is the whole supply, so every
+# page draws from here through pick() and no page shows the same one twice.
+# Native size is 406x406 or 374x246; css/theme.css caps every box so none
+# is ever drawn larger than that and softened.
+# ----------------------------------------------------------------------
+IMAGES = [
+    dict(key="residential-cleaning", w=374, h=246,
+         alt="Cleaner vacuuming a bright living room", cap="Vacuuming"),
+    dict(key="kitchen-deep-clean", w=406, h=406,
+         alt="Stovetop being degreased during a deep clean", cap="Stovetops"),
+    dict(key="move-out-cleaning", w=406, h=406,
+         alt="Baseboards being cleaned in an empty unit", cap="Baseboards"),
+    dict(key="living-room", w=374, h=246,
+         alt="Modern living room left clean and reset", cap="Living rooms"),
+    dict(key="bathroom-detail", w=406, h=406,
+         alt="Bathroom faucet and sink being detailed", cap="Taps and fittings"),
+    dict(key="office-cleaning", w=406, h=406,
+         alt="Office desk being disinfected", cap="Desks and offices"),
+    dict(key="carpet-cleaning", w=374, h=246,
+         alt="Carpet being cleaned with a hot water extractor", cap="Carpets"),
+    dict(key="window-cleaning", w=374, h=246,
+         alt="Interior window being cleaned streak free", cap="Glass and sills"),
+    dict(key="kitchen-detail", w=374, h=246,
+         alt="Close detail of a cleaned kitchen stovetop", cap="Kitchen detail"),
+    dict(key="floor-mopping", w=374, h=246,
+         alt="Hard floor being mopped through a hallway", cap="Hard floors"),
+    dict(key="property-exterior", w=406, h=406,
+         alt="Detached home exterior with a tidy driveway", cap="Around the home"),
+    dict(key="dining-detail", w=406, h=406,
+         alt="Dining table being wiped to a streak free finish", cap="Dining areas"),
+    dict(key="entry-mopping", w=406, h=406,
+         alt="Entryway floor being mopped", cap="Entryways"),
+    dict(key="childrens-room", w=406, h=406,
+         alt="Child's bedroom being dusted and tidied", cap="Children's rooms"),
+    dict(key="evening-vacuum", w=406, h=406,
+         alt="Living room being vacuumed in the evening", cap="Evening visits"),
+    dict(key="bedroom-result", w=374, h=246,
+         alt="Freshly made bed in a clean bedroom", cap="Bedrooms"),
+    dict(key="bathroom-result", w=374, h=246,
+         alt="Clean bathroom with polished glass and tile", cap="Bathrooms"),
+    dict(key="wood-floor", w=374, h=246,
+         alt="Polished wood floor catching the light", cap="Wood floors"),
+]
+for _r in IMAGES:
+    _r["src"] = "images/%s.jpg" % _r["key"]
+BY_KEY = dict((r["key"], r) for r in IMAGES)
+
+_used = set()
+
+
+def new_page():
+    """Start a page. Every pick() after this returns a different photograph."""
+    _used.clear()
+
+
+def pick(*prefer):
+    """The best unused photograph for a slot.
+
+    Give it the keys you would like, best first. If they are all spoken for
+    on this page it falls through to whatever is still free, so a slot never
+    repeats a picture that is already on screen. Alt text and caption travel
+    with the record, so the words always describe the photograph that is
+    actually shown rather than the slot it landed in.
+    """
+    for key in prefer:
+        if key and key in BY_KEY and key not in _used:
+            _used.add(key)
+            return BY_KEY[key]
+    for rec in IMAGES:
+        if rec["key"] not in _used:
+            _used.add(rec["key"])
+            return rec
+    raise RuntimeError(
+        "this page asks for more than the %d photographs available" % len(IMAGES))
+
+
+def img_tag(rec, depth=0, cls="", lazy=True, alt=None):
+    """An <img> carrying its own real pixel size, so nothing is guessed."""
+    return '<img%s src="%s%s" alt="%s" width="%d" height="%d"%s>' % (
+        (' class="%s"' % cls) if cls else "",
+        "../" * depth, rec["src"], alt if alt is not None else rec["alt"],
+        rec["w"], rec["h"], ' loading="lazy"' if lazy else "")
+
+
+# ----------------------------------------------------------------------
 # Service catalogue. Every entry owns its own photograph.
 # ----------------------------------------------------------------------
 SERVICES = [
     dict(slug="house-cleaning-etobicoke", short="House Cleaning", ring=True,
-         img="images/residential-cleaning.jpg", thumb="images/floor-mopping.jpg",
+         img="residential-cleaning", thumb="floor-mopping",
          title="House Cleaning in Etobicoke &amp; Toronto",
-         alt="Cleaner vacuuming a bright living room",
-         thumb_alt="Hard floor being mopped through a hallway",
          blurb="Weekly, every other week or monthly. The same careful run through every room, every visit."),
     dict(slug="deep-cleaning-etobicoke", short="Deep Cleaning", ring=True,
-         img="images/kitchen-deep-clean.jpg", thumb="images/kitchen-detail.jpg",
+         img="kitchen-deep-clean", thumb="kitchen-detail",
          title="Deep Cleaning in Etobicoke &amp; Toronto",
-         alt="Stovetop being degreased during a deep clean",
-         thumb_alt="Close detail work on a kitchen stovetop",
          blurb="The reset clean. Inside appliances, behind furniture, grout, baseboards and all the edges."),
     dict(slug="move-out-cleaning-etobicoke", short="Move In &amp; Move Out", ring=True,
-         img="images/move-out-cleaning.jpg", thumb="images/wood-floor.jpg",
+         img="move-out-cleaning", thumb="wood-floor",
          title="Move In &amp; Move Out Cleaning in Etobicoke",
-         alt="Baseboards being cleaned in an empty unit",
-         thumb_alt="Polished wood floor in a vacant room",
          blurb="Empty unit, top to bottom, ready for the walkthrough, the listing or the new keys."),
     dict(slug="condo-cleaning-etobicoke", short="Condo &amp; Apartment", ring=True,
-         img="images/living-room.jpg", thumb="images/bedroom-result.jpg",
+         img="living-room", thumb="bedroom-result",
          title="Condo &amp; Apartment Cleaning in Etobicoke",
-         alt="Tidy modern condo living room after a clean",
-         thumb_alt="Freshly made bed in a clean bedroom",
          blurb="Built for smaller footprints. In, around and under everything, without the all-day disruption."),
     dict(slug="kitchen-bathroom-cleaning", short="Kitchens &amp; Bathrooms", ring=True,
-         img="images/bathroom-detail.jpg", thumb="images/bathroom-result.jpg",
+         img="bathroom-detail", thumb="bathroom-result",
          title="Kitchen &amp; Bathroom Cleaning in Etobicoke",
-         alt="Bathroom faucet and sink being detailed",
-         thumb_alt="Clean bathroom with polished glass and tile",
          blurb="The two rooms a home is judged on. Taps, tile, grout, glass and every surface in between."),
     dict(slug="office-cleaning-etobicoke", short="Office Cleaning", ring=True,
-         img="images/office-cleaning.jpg", thumb="images/entry-mopping.jpg",
+         img="office-cleaning", thumb="entry-mopping",
          title="Office &amp; Small Business Cleaning in Etobicoke",
-         alt="Office desk being disinfected",
-         thumb_alt="Entryway floor being mopped",
          blurb="Desks, kitchens, washrooms and common areas, cleaned after hours or before you open."),
     dict(slug="carpet-cleaning-etobicoke", short="Carpet &amp; Upholstery", ring=True,
-         img="images/carpet-cleaning.jpg", thumb="images/evening-vacuum.jpg",
+         img="carpet-cleaning", thumb="evening-vacuum",
          title="Carpet &amp; Upholstery Cleaning in Etobicoke",
-         alt="Carpet being cleaned with a hot water extractor",
-         thumb_alt="Living room carpet vacuumed in the evening",
          blurb="Hot water extraction that lifts what vacuuming leaves behind, on carpet, rugs and soft furniture."),
     dict(slug="window-cleaning-etobicoke", short="Interior Windows", ring=True,
-         img="images/window-cleaning.jpg", thumb="images/dining-detail.jpg",
+         img="window-cleaning", thumb="dining-detail",
          title="Interior Window Cleaning in Etobicoke",
-         alt="Interior window being cleaned streak free",
-         thumb_alt="Dining table detailed to a streak free finish",
          blurb="Glass, frames, sills and tracks, done from the inside so the daylight actually gets through."),
     dict(slug="post-renovation-cleaning", short="Post-Renovation", ring=False,
-         img="images/kitchen-detail.jpg", thumb="images/wood-floor.jpg",
+         img="kitchen-detail", thumb="wood-floor",
          title="Post-Renovation Cleaning in Etobicoke",
-         alt="Fine dust wiped from a kitchen surface after a renovation",
-         thumb_alt="Wood floor cleaned after construction work",
          blurb="Fine dust off every surface, sill and vent so the finished work actually looks finished."),
     dict(slug="recurring-cleaning-etobicoke", short="Recurring Plans", ring=False,
-         img="images/floor-mopping.jpg", thumb="images/childrens-room.jpg",
+         img="floor-mopping", thumb="childrens-room",
          title="Weekly &amp; Biweekly Cleaning Plans in Etobicoke",
-         alt="Hard floors mopped on a recurring cleaning visit",
-         thumb_alt="Child's bedroom dusted and tidied",
          blurb="The same crew, the same day, the same standard. Set it once and stop thinking about it."),
 ]
 BY_SLUG = dict((s["slug"], s) for s in SERVICES)
@@ -115,22 +180,22 @@ RING = [s for s in SERVICES if s["ring"]][:8]
 LOCATIONS = [
     dict(slug="cleaning-services-etobicoke", area="Etobicoke",
          note="The Westway, Kingsview Village, Islington, Rexdale, Mimico and The Kingsway.",
-         img="images/property-exterior.jpg", alt="Detached Etobicoke home with a tidy exterior"),
+         img="property-exterior"),
     dict(slug="cleaning-services-toronto", area="Toronto",
          note="The west end, downtown condos, Junction, High Park and the lakeshore.",
-         img="images/living-room.jpg", alt="Toronto condo living room after a clean"),
+         img="living-room"),
     dict(slug="cleaning-services-mississauga", area="Mississauga",
          note="Malton, Meadowvale, Cooksville, Port Credit and Square One.",
-         img="images/bedroom-result.jpg", alt="Mississauga bedroom cleaned and made up"),
+         img="bedroom-result"),
     dict(slug="cleaning-services-north-york", area="North York",
          note="Weston, Humber Summit, Downsview, Willowdale and the Yonge corridor.",
-         img="images/wood-floor.jpg", alt="Polished wood floors in a North York home"),
+         img="wood-floor"),
     dict(slug="cleaning-services-brampton", area="Brampton",
          note="Bramalea, Heart Lake, Springdale, Castlemore and Mount Pleasant.",
-         img="images/bathroom-result.jpg", alt="Clean bathroom in a Brampton home"),
+         img="bathroom-result"),
     dict(slug="cleaning-services-vaughan", area="Vaughan",
          note="Woodbridge, Maple, Concord, Thornhill and Kleinburg.",
-         img="images/entry-mopping.jpg", alt="Entryway mopped in a Vaughan home"),
+         img="entry-mopping"),
 ]
 
 # ----------------------------------------------------------------------
@@ -300,9 +365,9 @@ def btns(depth=0, quote_label="Free Quote on WhatsApp"):
 
 
 def hero_media(depth=0, media=None, alt=""):
-    """The floating panel in a hero. Shows the picture whole, never cropped."""
-    up = "../" * depth
-    return '          <img src="%s%s" alt="%s" />' % (up, media, alt)
+    """The floating panel in a hero, at the photograph's own size."""
+    rec = pick(media)
+    return "          " + img_tag(rec, depth, lazy=False)
 
 
 def hero_small(depth, trail, h1, glow, sub, media, alt="", buttons=None):
@@ -330,28 +395,34 @@ def hero_small(depth, trail, h1, glow, sub, media, alt="", buttons=None):
            BTNS=buttons if buttons is not None else btns(depth))
 
 
-def photo_strip(depth, items, wide=False):
-    """A plain row of pictures, each with its caption printed underneath."""
-    up = "../" * depth
+def photo_strip(depth, want, wide=False):
+    """A row of pictures, each captioned with what it actually shows.
+
+    `want` is a list of preferred image keys. Anything already used on the
+    page is skipped, so a strip never echoes a picture from further up.
+    """
     cls = "photo-card wide" if wide else "photo-card"
-    cards = "".join(
-        '<figure class="%s"><img src="%s%s" alt="%s" loading="lazy"><span>%s</span></figure>'
-        % (cls, up, src, alt, cap) for src, alt, cap in items)
-    return '<div class="photo-strip">%s</div>' % cards
+    cards = []
+    for key in want:
+        rec = pick(key)
+        cards.append('<figure class="%s">%s<span>%s</span></figure>'
+                     % (cls, img_tag(rec, depth), rec["cap"]))
+    return '<div class="photo-strip">%s</div>' % "".join(cards)
 
 
 def service_tiles(depth, services):
     up = "../" * depth
     out = []
     for s in services:
+        rec = pick(s["img"], s["thumb"])
         out.append("""        <article class="service-tile">
-          <div class="service-tile-media"><img src="{UP}{IMG}" alt="{ALT}" loading="lazy"></div>
+          <div class="service-tile-media">{IMG}</div>
           <div class="service-tile-body">
             <h3>{SHORT}</h3>
             <p>{BLURB}</p>
             <div class="row"><a href="{UP}{SLUG}.html">Learn more &rarr;</a><a class="btn btn-gold" style="padding:.5rem .9rem; font-size:.8rem;" href="{WA}" target="_blank" rel="noopener">Quote</a></div>
           </div>
-        </article>""".format(UP=up, IMG=s["img"], ALT=s["alt"], SHORT=s["short"],
+        </article>""".format(UP=up, IMG=img_tag(rec, depth), SHORT=s["short"],
                              BLURB=s["blurb"], SLUG=s["slug"],
                              WA=wa("I'd like a quote for " + strip(s["short"]).lower() + ". Here's the home:")))
     return "\n".join(out)
@@ -493,12 +564,13 @@ def sidebar(depth=0, photo=None, photo_alt="", photo_cap="", extra=""):
     svc = "".join('<li><a href="%s%s.html">%s</a></li>' % (up, s["slug"], s["short"]) for s in SERVICES)
     pic = ""
     if photo:
+        rec = pick(photo)
         pic = """        <div class="glass-card">
-          <img src="{UP}{IMG}" alt="{ALT}" loading="lazy">
+          {IMG}
           <h3>{CAP}</h3>
           <p>Every visit finishes the same way: we walk the home with you before we pack up.</p>
         </div>
-""".format(UP=up, IMG=photo, ALT=photo_alt, CAP=photo_cap)
+""".format(IMG=img_tag(rec, depth), CAP=photo_cap or rec["cap"])
     return """      <aside class="sidebar">
         <div class="glass-card">
           <h3>Free quote, no pressure</h3>
