@@ -42,7 +42,7 @@ COPY = {
       ("Do you move furniture?", "We will shift a chair. Anything heavier, or a cabinet in front of the window, is better moved before we get there."),
       ("Will you do the inside in winter?", "Yes, interiors run all year. It is the outsides that stop once it is below freezing."),
       ("What if it rains afterwards?", "Clean glass sheds rain without spotting. It is dirty glass that streaks when it gets wet, so a shower the next day is not undoing the work.")],
-    strip=["two-storey", "bay-window", "track-detail", "screen-brush"],
+    strip=["bay-window", "sunlit-living-room", "pole-on-home", "sill-wipe"],
     related=["interior-window-cleaning-edmonton", "window-screens-tracks-edmonton",
              "hard-water-stain-removal-edmonton"]),
 

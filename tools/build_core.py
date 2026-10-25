@@ -222,13 +222,13 @@ home = head(
     SMSICON=SVG["sms"], TEL=PHONE_TEL, PHONE=PHONE, HOURS=HOURS_SHORT,
     SQUEEGEE=SVG["squeegee"], LADDER=SVG["ladder"], DROP=SVG["drop"],
     CHAT=SVG["chat"], WINDOW=SVG["window"], SMSMOCK=sms_mock(0),
-    WHY1=img_tag(pick("squeegee-soapy"), 0),
-    WHY2=img_tag(pick("ladder-upper"), 0),
+    WHY1=img_tag(pick("sill-wipe"), 0),
+    WHY2=img_tag(pick("pole-on-home"), 0),
     WHY3=img_tag(pick("water-fed"), 0),
     BX1=img_tag(pick("sunlit-living-room"), 0, cls="bg"),
-    BX2=img_tag(pick("retail-front"), 0, cls="bg"),
+    BX2=img_tag(pick("modern-home"), 0, cls="bg"),
     TILES=service_tiles(0, SERVICES),
-    STRIP=photo_strip(0, ["track-detail", "cloth-polish", "bay-window", "office-view"]),
+    STRIP=photo_strip(0, ["bay-window", "office-view", "supplies", "before-after"]),
     FAQ=faq_block(HOME_FAQ), CTA=cta_strip(0), FOOT=footer(0))
 
 page("index.html", home)
