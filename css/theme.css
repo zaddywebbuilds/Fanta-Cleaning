@@ -2061,3 +2061,11 @@ p { margin-bottom: 1rem; color: var(--c-ink-soft); }
   .why-grid,
   .grid-4 { grid-template-columns: minmax(0, var(--photo-max)); }
 }
+
+/* Three-item rows: three across or one down, never two with a stray.
+   These sit inside the narrower content column on most pages, where
+   auto-fit resolves to two columns and strands the third card. */
+.grid-3 { grid-template-columns: repeat(3, minmax(0, var(--photo-max))); }
+@media (max-width: 1000px) {
+  .grid-3 { grid-template-columns: minmax(0, var(--photo-max)); }
+}
