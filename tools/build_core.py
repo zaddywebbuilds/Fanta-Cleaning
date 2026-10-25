@@ -330,7 +330,7 @@ services_page = head(
     BUN1=img_tag(pick("pole-on-home"), 0),
     BUN2=img_tag(pick("interior-microfiber"), 0),
     BUN3=img_tag(pick("sill-wipe"), 0),
-    STRIP=photo_strip(0, ["bay-window", "office-view", "supplies"]),
+    STRIP=photo_strip(0, ["bay-window", "office-view", "supplies", "water-fed"]),
     CTA=cta_strip(0), FOOT=footer(0))
 
 page("services.html", services_page)

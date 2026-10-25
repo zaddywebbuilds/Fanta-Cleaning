@@ -1948,9 +1948,10 @@ p { margin-bottom: 1rem; color: var(--c-ink-soft); }
 .why-grid { grid-template-columns: repeat(auto-fit, minmax(240px, var(--photo-max))); }
 .grid, .why-grid, .photo-strip { justify-content: center; }
 
-.photo-strip { grid-template-columns: repeat(auto-fit, minmax(170px, 260px)); }
-@media (max-width: 1024px) { .photo-strip { grid-template-columns: repeat(3, minmax(0, 260px)); } }
-@media (max-width: 680px)  { .photo-strip { grid-template-columns: repeat(2, minmax(0, 260px)); } }
+/* Strips always carry four, so three columns would strand one. */
+.photo-strip { grid-template-columns: repeat(4, minmax(0, 260px)); }
+@media (max-width: 900px) { .photo-strip { grid-template-columns: repeat(2, minmax(0, 260px)); } }
+@media (max-width: 420px) { .photo-strip { grid-template-columns: minmax(0, 260px); } }
 
 /* One frame shape everywhere, chosen so the landscape set is uncropped. */
 .service-tile-media,
