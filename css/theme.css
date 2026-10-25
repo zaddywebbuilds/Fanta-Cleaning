@@ -2069,3 +2069,88 @@ p { margin-bottom: 1rem; color: var(--c-ink-soft); }
 @media (max-width: 1000px) {
   .grid-3 { grid-template-columns: minmax(0, var(--photo-max)); }
 }
+
+/* ============================================================
+   NOTHING SITS ON TOP OF THE CONTENT
+   ============================================================ */
+
+/* On phones the fixed bar at the bottom already offers Text, Call and
+   Quote, so the floating round button is a second copy of the same thing
+   parked on top of whatever happens to be at the bottom right: a
+   paragraph, a photograph, or a card's own button. It goes. */
+@media (max-width: 640px) {
+  .float-text { display: none; }
+}
+
+/* Give the floating button its own lane on larger screens so it clears
+   the content column rather than resting on it. */
+@media (min-width: 641px) {
+  .float-text { bottom: 20px; right: 20px; }
+}
+
+/* A card's footer row must never squeeze its own button out of the card.
+   The tile clips its overflow, so a long label used to cut the button in
+   half instead of wrapping under it. */
+.service-tile .row {
+  flex-wrap: wrap;
+  gap: .55rem .75rem;
+}
+.service-tile .row > a:not(.btn) { white-space: nowrap; }
+.service-tile .row .btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   CONTRAST AFTER THE RECOLOUR
+   The old gold buttons were light, so dark ink read well on them.
+   Recolouring made the fills dark while the text stayed dark, and
+   "Price it" disappeared into the far end of the gradient. These
+   fills are dark, so their text is white.
+   ============================================================ */
+.btn-gold {
+  background: linear-gradient(135deg, #1A6FA6, #0E4268);
+  color: #FFFFFF;
+}
+.btn-gold:hover { background: linear-gradient(135deg, #1E7FBF, #14507E); color: #FFFFFF; }
+
+.step-n { background: var(--c-blue); color: #FFFFFF; }
+
+.bx-tile h3 .arrow { color: #FFFFFF; }
+
+/* White on #1E7FBF lands at 4.34:1, just under the 4.5:1 needed for body
+   sized text. A shade darker clears it without changing the look. */
+.btn-text { background: #1A6FA6; box-shadow: 0 8px 22px rgba(26,111,166, 0.32); }
+.btn-text:hover { background: #1E7FBF; }
+.float-text { background: #1A6FA6; }
+
+/* The card footer styles its links blue, and that selector is specific
+   enough to beat .btn-gold, so the button's own label was being painted
+   blue on a blue fill and vanishing. The plain link stays blue; the
+   button keeps its white. */
+.service-tile .row a.btn,
+.sidebar .row a.btn,
+.content-main .row a.btn { color: #FFFFFF; }
+
+/* These badges and the tile arrow carry white glyphs, but the recolour
+   left their gradients starting on a pale blue, so the glyph vanished at
+   that end. Every stop is now dark enough for white to read across the
+   whole sweep. They stay distinct by depth rather than by lightness. */
+.rev-av.a { background: linear-gradient(135deg, #1A6FA6, #14507E); color: #FFFFFF; }
+.rev-av.b { background: linear-gradient(135deg, #1B6598, #0E4268); color: #FFFFFF; }
+.rev-av.c { background: linear-gradient(135deg, #1A6FA6, #10456B); color: #FFFFFF; }
+.rev-av.d { background: linear-gradient(135deg, #14507E, #0A3254); color: #FFFFFF; }
+.rev-av.e { background: linear-gradient(135deg, #1B6598, #123247); color: #FFFFFF; }
+
+.bx-tile h3 .arrow { background: linear-gradient(135deg, #1A6FA6, #0E4268); color: #FFFFFF; }
+
+/* The captions under the call-to-action demos were white at 92% over the
+   brightest part of the glow behind them, which composites to 3.99:1.
+   Solid white, and a slightly softer glow, clears 4.5:1. */
+.cta-strip {
+  background:
+    radial-gradient(ellipse 60% 60% at 30% 50%, rgba(95,184,232, 0.34) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 80% 60%, rgba(201,225,242, 0.3) 0%, transparent 60%),
+    linear-gradient(135deg, #0E2235 0%, #123247 100%);
+}
+.demo-cap { color: #FFFFFF; }
