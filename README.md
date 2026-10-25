@@ -71,6 +71,37 @@ Enterprise" marks visible on uniforms and kit in some shots are fabricated by th
 image generator and are not the official logo. `before-after.jpg` is captioned
 as an illustration. Replace these with real job photographs when there are some.
 
+## Review popups
+
+The popup component is built and wired up. It sits dormant because
+`REVIEWS` in `tools/common.py` is an empty list, and nothing renders while
+it is empty. Add entries and the popups start appearing bottom left, one at
+a time, seven seconds after the page loads, with a close button that stops
+them for the rest of the visit.
+
+```python
+REVIEWS = [
+    dict(name="Dave M.", area="St. Albert", stars=5,
+         text="Did the whole house inside and out, two storeys...",
+         when="2 weeks ago"),
+]
+```
+
+Up to about fifteen reads well. `area` should be a town from `LOCATIONS`.
+
+**Only real reviews go in here.** A real customer wrote it, they are happy
+for it to be on the site, and the name and town are theirs. Copy their
+wording as they left it.
+
+Inventing testimonials is not a grey area. Under the Competition Act a
+false or misleading representation "to the public" covers a business's own
+website, not just review platforms, and the 2024 amendments address
+reviews directly. Penalties run to the greater of $10 million or three
+times the benefit gained. Google also removes profiles over fabricated
+testimonials found on a linked site. The fastest honest route to a full
+list is to ask after each job: most people say yes, and a text asking for
+a line about the work takes a minute to send.
+
 ## Contact flow
 
 Calls and texts, not WhatsApp. `sms:` links carry a pre-written first line, and

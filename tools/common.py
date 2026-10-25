@@ -210,6 +210,59 @@ LOCATIONS = [
 ]
 
 # ----------------------------------------------------------------------
+# Review popups.
+#
+# EMPTY ON PURPOSE. The popups only appear once there is something real to
+# put in them, and the Google profile currently carries no reviews.
+#
+# Put a review here ONLY when all of this is true:
+#   - a real customer actually wrote it,
+#   - they are happy for it to appear on the website,
+#   - the name and the town are theirs, not invented.
+#
+# Copy the wording as they left it. Do not write one on a customer's
+# behalf, do not invent a name, and do not pad the list out to look busier.
+# Fake testimonials are deceptive marketing under the Competition Act, and
+# Google suspends business profiles over them. An empty list costs nothing;
+# a suspended profile costs the phone ringing.
+#
+#   dict(name="First name L.", area="St. Albert", stars=5,
+#        text="What they actually said.", when="2 weeks ago"),
+#
+# `area` should be one of the towns in LOCATIONS. Up to about 15 reads
+# well; beyond that the same ones start coming round again too often.
+# ----------------------------------------------------------------------
+REVIEWS = []
+
+
+def review_popups(depth=0):
+    """The popup markup, or nothing at all while REVIEWS is empty."""
+    if not REVIEWS:
+        return ""
+    cards = []
+    for i, r in enumerate(REVIEWS):
+        stars = "".join(SVG["star"] for _ in range(int(r.get("stars", 5))))
+        cards.append(
+            '<article class="rv-pop-card" data-i="{I}">'
+            '<div class="rv-pop-top">'
+            '<span class="rv-pop-av">{INITIAL}</span>'
+            '<span class="rv-pop-who"><strong>{NAME}</strong><small>{AREA}</small></span>'
+            '<span class="rv-pop-stars" aria-label="{S} out of 5">{STARS}</span>'
+            '</div>'
+            '<p>{TEXT}</p>'
+            '<footer>{WHEN}</footer>'
+            '</article>'.format(
+                I=i, INITIAL=strip(r["name"])[:1].upper(), NAME=r["name"],
+                AREA=r["area"], S=r.get("stars", 5), STARS=stars,
+                TEXT=r["text"], WHEN=r.get("when", "")))
+    return """  <aside class="rv-pop" aria-live="polite" aria-label="Recent reviews" hidden>
+    <button class="rv-pop-close" type="button" aria-label="Hide reviews">&times;</button>
+{CARDS}
+  </aside>
+""".format(CARDS="\n".join("    " + c for c in cards))
+
+
+# ----------------------------------------------------------------------
 # Inline SVG icons
 # ----------------------------------------------------------------------
 SVG = dict(
@@ -553,7 +606,7 @@ def footer(depth=0):
     <div class="foot-bottom">&copy; <span id="yr">2026</span> {NAMEP} &middot; {AREA} &middot; <a href="tel:{TEL}">{PHONE}</a> &middot; <a href="{UP}privacy.html">Privacy</a> &middot; <a href="{UP}terms.html">Terms</a></div>
   </footer>
 
-  <a class="float-text" href="{SMS}" aria-label="Text us a photo">{SMSICON}</a>
+{POPUPS}  <a class="float-text" href="{SMS}" aria-label="Text us a photo">{SMSICON}</a>
   <div class="mobile-cta">
     <a class="btn btn-text" href="{SMS}">Text</a>
     <a class="btn btn-primary" href="tel:{TEL}">Call</a>
@@ -567,7 +620,8 @@ def footer(depth=0):
 """.format(NAME=NAME, NAMEP=strip(NAME_FULL), TAGLINE=TAGLINE, AREA=AREA,
            PIN=SVG["pin"], PHONEICON=SVG["phone"], TEL=PHONE_TEL, PHONE=PHONE,
            CLOCK=SVG["clock"], HOURS=HOURS_SHORT, SVC=svc, LOC=loc, UP=up,
-           MAPS=MAPS, SMS=SMS_GENERAL, SMSICON=SVG["sms"])
+           MAPS=MAPS, SMS=SMS_GENERAL, SMSICON=SVG["sms"],
+           POPUPS=review_popups(depth))
 
 
 def sidebar(depth=0, photo=None, photo_cap="", extra=""):

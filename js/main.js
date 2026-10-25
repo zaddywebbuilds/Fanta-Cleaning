@@ -38,6 +38,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Review popups. Shows each card in turn, bottom left. The markup is only
+  // on the page when tools/common.py has real reviews in REVIEWS, so this
+  // does nothing at all on a site with none.
+  (function reviewPopups() {
+    const wrap = document.querySelector('.rv-pop');
+    if (!wrap) return;
+    const cards = [...wrap.querySelectorAll('.rv-pop-card')];
+    if (!cards.length) return;
+
+    const FIRST = 7000;   // leave people alone until they have started reading
+    const SHOWN = 6500;   // long enough to read a short review
+    const GAP   = 9000;   // and a clear break before the next one
+
+    let i = 0, timer = null, stopped = false;
+
+    // Respect a previous dismissal for the rest of the browsing session.
+    try {
+      if (sessionStorage.getItem('rvPopDismissed') === '1') return;
+    } catch (e) { /* private window, carry on */ }
+
+    const hideAll = () => cards.forEach(c => c.classList.remove('show'));
+
+    const step = () => {
+      if (stopped) return;
+      hideAll();
+      const card = cards[i % cards.length];
+      i++;
+      wrap.hidden = false;
+      // let the browser paint the hidden state before transitioning in
+      requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('show')));
+      timer = setTimeout(() => {
+        card.classList.remove('show');
+        timer = setTimeout(step, GAP);
+      }, SHOWN);
+    };
+
+    const stop = () => {
+      stopped = true;
+      clearTimeout(timer);
+      hideAll();
+      wrap.hidden = true;
+      try { sessionStorage.setItem('rvPopDismissed', '1'); } catch (e) {}
+    };
+
+    const close = wrap.querySelector('.rv-pop-close');
+    if (close) close.addEventListener('click', stop);
+
+    // Pause while the tab is in the background rather than burning through
+    // the whole set where nobody can see it.
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { clearTimeout(timer); }
+      else if (!stopped) { timer = setTimeout(step, 1500); }
+    });
+
+    timer = setTimeout(step, FIRST);
+  })();
+
   // Track conversion clicks (placeholder — replace with gtag/fbq when keys are added)
   const trackEvent = (name, params = {}) => {
     if (typeof gtag === 'function') gtag('event', name, params);

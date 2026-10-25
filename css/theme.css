@@ -2154,3 +2154,89 @@ p { margin-bottom: 1rem; color: var(--c-ink-soft); }
     linear-gradient(135deg, #0E2235 0%, #123247 100%);
 }
 .demo-cap { color: #FFFFFF; }
+
+/* ============================================================
+   REVIEW POPUPS
+   Dormant unless tools/common.py has real reviews in REVIEWS.
+   Bottom left, so it never lands on the call button at bottom
+   right or the fixed bar on phones.
+   ============================================================ */
+.rv-pop {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 80;
+  width: min(330px, calc(100vw - 36px));
+  pointer-events: none;
+}
+.rv-pop[hidden] { display: none; }
+
+.rv-pop-card {
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.94);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: var(--r-md);
+  box-shadow: 0 16px 40px rgba(14,34,53,0.22);
+  padding: .85rem .95rem .7rem;
+  opacity: 0;
+  transform: translateY(14px) scale(.98);
+  transition: opacity .45s ease, transform .45s ease;
+  pointer-events: none;
+}
+.rv-pop-card.show {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.rv-pop-top { display: flex; align-items: center; gap: .55rem; margin-bottom: .45rem; }
+.rv-pop-av {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #1A6FA6, #0E4268);
+  color: #fff; font-weight: 700; font-size: .85rem;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.rv-pop-who { line-height: 1.2; min-width: 0; flex: 1; }
+.rv-pop-who strong { display: block; font-size: .86rem; color: var(--c-ink); font-weight: 600; }
+.rv-pop-who small { font-size: .72rem; color: var(--c-ink-soft); }
+.rv-pop-stars { display: flex; gap: 1px; flex-shrink: 0; }
+.rv-pop-stars svg { width: 13px; height: 13px; color: #E8A33D; }
+
+.rv-pop-card p {
+  font-size: .84rem;
+  line-height: 1.5;
+  color: var(--c-ink-soft);
+  margin: 0 0 .4rem;
+}
+.rv-pop-card footer { font-size: .7rem; color: var(--c-ink-soft); opacity: .75; }
+
+.rv-pop-close {
+  position: absolute;
+  top: -8px; right: -8px;
+  width: 26px; height: 26px;
+  border: 1px solid rgba(255,255,255,.9);
+  border-radius: 50%;
+  background: var(--c-ink);
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  pointer-events: auto;
+  box-shadow: var(--sh-soft);
+}
+
+/* Clear of the fixed action bar on phones. */
+@media (max-width: 640px) {
+  .rv-pop { left: 12px; bottom: 80px; width: calc(100vw - 24px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-pop-card { transition: opacity .2s ease; transform: none; }
+  .rv-pop-card.show { transform: none; }
+}
