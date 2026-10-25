@@ -266,7 +266,7 @@ def head(title, desc, canonical, depth=0, extra_ld="", og_type="website", og_ima
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{UP}css/theme.css?v=2">
+  <link rel="stylesheet" href="{UP}css/theme.css?v=3">
 {LD}</head>
 <body>
 """.format(NAMEP=strip(NAME_FULL), TITLE=title, DESC=desc, CANON=canonical, UP=up,
@@ -560,7 +560,7 @@ def footer(depth=0):
     <a class="btn btn-gold" href="{UP}contact.html">Quote</a>
   </div>
 
-  <script src="{UP}js/main.js?v=2"></script>
+  <script src="{UP}js/main.js?v=3"></script>
   <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
 </body>
 </html>
