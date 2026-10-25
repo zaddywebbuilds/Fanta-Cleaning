@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Fanta Cleaning">
-  <title>Fanta Cleaning</title>
-  <path d="M32 6 61 29h-8v27a3 3 0 0 1-3 3H14a3 3 0 0 1-3-3V29H3z"
-        fill="none" stroke="#026134" stroke-width="5" stroke-linejoin="round"/>
-  <path d="M40 27c0 9-6 16-14 18 0-11 5-17 14-18z" fill="#608C02"/>
-  <path d="M26 45c0-7 4-12 10-14" fill="none" stroke="#026134" stroke-width="2.4" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="R&amp;F Enterprise">
+  <title>R&amp;F Enterprise</title>
+  <rect x="7" y="9" width="40" height="34" rx="3" fill="none" stroke="#14507E" stroke-width="4"/>
+  <path d="M27 9v34M7 26h40" stroke="#14507E" stroke-width="3"/>
+  <path d="M12 21 22 14" stroke="#5FB8E8" stroke-width="3" stroke-linecap="round"/>
+  <rect x="38" y="44" width="20" height="5" rx="2.5" transform="rotate(-38 38 44)" fill="#14507E"/>
+  <path d="M44 56l9-11" stroke="#2E9BD6" stroke-width="4" stroke-linecap="round"/>
 </svg>

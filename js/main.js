@@ -1,4 +1,4 @@
-/* Fanta Cleaning - main scripts */
+/* R&F Enterprise - main scripts */
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof fbq === 'function') fbq('trackCustom', name, params);
   };
 
-  document.querySelectorAll('a[href^="https://wa.me"]').forEach(a => {
-    a.addEventListener('click', () => trackEvent('whatsapp_click', { location: window.location.pathname }));
+  document.querySelectorAll('a[href^="sms:"]').forEach(a => {
+    a.addEventListener('click', () => trackEvent('text_click', { location: window.location.pathname }));
   });
   document.querySelectorAll('a[href^="tel:"]').forEach(a => {
     a.addEventListener('click', () => trackEvent('phone_click', { location: window.location.pathname }));
